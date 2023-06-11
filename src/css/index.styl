@@ -1,0 +1,580 @@
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+
+@font-face {
+    font-family: 'AA Haymaker';
+    src: url('../fonts/AAHaymaker.woff2') format('woff2'),
+        url('../fonts/AAHaymaker.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --default-color #faffaf;
+    --preloader-color #ce4100;
+    --button-bg #ce4100;
+    --button-hover-bg #861500;
+    --button-hover-color #faffaf;
+    --button-color #faffaf;
+    --disabled-bg #505050;
+    --card-bg #ce4100;
+    --card-color #faffaf;
+    --card-flip-bg #861500;
+    --card-flip-color #faffaf;
+    --card-winner-bg #003939;
+    --box-winner-bg #ce4100e6;
+}
+
+
+html,
+body
+{
+    width 100%;
+    height 100vh;
+    background linear-gradient(#232f44, #000);
+    color var(--default-color);
+
+    font 16px 'AA Haymaker';
+    font-weight 400;
+	line-height 1.5;
+
+    -ms-user-select none;
+    -moz-user-select none;
+    -webkit-user-select none;
+    user-select none;
+    -webkit-tap-highlight-color transparent;
+    position relative;
+    overflow hidden;
+}
+
+button {
+    margin 0;
+    padding 0;
+    border none;
+    outline none;
+    padding 14px;
+    background var(--button-bg);
+    color var(--button-color);
+    font 18px 'AA Haymaker';
+    font-weight bold;
+    border-radius 2px;
+    text-transform uppercase;
+    text-shadow 1px 1px 1px var(--default-color);
+    box-shadow 0px 0px 5px var(--default-color);
+    cursor pointer;
+    transition all 0.3s;
+}
+
+button:hover {
+    background var(--button-hover-bg);
+    color var(--button-hover-color);
+    box-shadow 0 0 2px transparent;
+    transition all 0.3s;
+}
+
+.game {
+    position absolute;
+    left 0;
+    top 0;
+    right 0;
+    bottom 0;
+    z-index 10;
+    display flex;
+    flex-direction column;
+    align-items center;
+    justify-content center;
+    overflow-y scroll;
+}
+
+.wrap {
+    max-width 480px;
+    width 100%;
+    margin 0 auto;
+    padding 0 10px;
+}
+
+.header__title {
+    font-size 32px;
+    font-weight bold;
+    text-align center;
+    text-transform uppercase;
+    text-shadow 2px 2px 2px var(--default-color);
+}
+
+.game__field--wrap {
+    display flex;
+    flex-direction column;
+    align-items center;
+    justify-content center;
+}
+
+.game__field--title,
+.game__total {
+    text-transform uppercase;
+    text-shadow 1px 1px 2px var(--default-color);
+}
+
+.game__field--title {
+    font-size 20px;
+    text-align center;
+    margin: 12px 0 24px;
+}
+
+.game__total {
+    display flex;
+    flex-wrap wrap;
+    align-items center;
+    justify-content center;
+    font-size 18px;
+    margin 12px 0 14px;
+}
+
+.game__total--text {
+    padding 0 10px;
+}
+
+.game__indicator {
+    min-width 120px;
+}
+
+.game__field--btn {
+    max-width 280px;
+    width 100%;
+}
+
+.game__field--btn:not(last-child) {
+    margin-bottom 16px;
+}
+
+.game__table {
+    width 100%;
+    display inline-flex;
+    flex-wrap wrap;
+    align-items center;
+    justify-content center;
+    position relative;
+}
+
+.game__table.overlay::before {
+    content "";
+    position absolute;
+    left 0;
+    top 0;
+    width 100%;
+    height 100%;
+    z-index 10;
+}
+
+.game__card {
+    width 50px;
+    flex 0 0 20%;
+    display flex;
+    align-items center;
+    justify-content center;
+    background var(--card-bg);
+    color var(--card-color);
+    aspect-ratio 1 / 1;
+    border-radius 2px;
+    margin 1%;
+    box-shadow 0px 0px 5px var(--default-color);
+    cursor pointer;
+    position relative;
+    transition all 0.3s;
+}
+
+.game__table.overlay .game__card:before {
+    content "";
+    position absolute;
+    left 0;
+    top 0;
+    width 100%;
+    height 100%;
+    z-index 2;
+    backdrop-filter blur(3px);
+}
+
+.game__card span {
+    font-size 32px;
+    display none;
+}
+
+.game__card span+span {
+    display block;
+}
+
+.game__btns--wrap {
+    margin-top 20px;
+    width 100%;
+    display flex;
+    align-items center;
+    justify-content center;
+}
+
+.game__btn {
+    margin 0 4px;
+    font-size 24px;
+}
+
+.game__start,
+.game__theme {
+    position relative;
+}
+
+.game__start.disabled::after,
+.game__theme.disabled::after {
+    content "";
+    position absolute;
+    left 0;
+    top 0;
+    width 100%;
+    height 100%;
+    z-index 4;
+    backdrop-filter blur(3px);
+}
+
+.game__start.disabled:hover,
+.game__theme.disabled:hover {
+    background var(--disabled-bg);
+    box-shadow 0px 0px 5px var(--default-color);
+    color var(--card-color);
+}
+
+.game__card.flip {
+    background var(--card-flip-bg) !important;
+    color var(--card-flip-color) !important;
+    transform perspective(100px) rotateY(180deg);
+}
+
+.game__card.flip span {
+    display block;
+}
+
+.game__card.flip span+span {
+    display none;
+}
+
+.game__card.success {
+    background var(--card-winner-bg) !important;
+    color var(--card-color) !important;
+}
+
+.game__win {
+    position absolute;
+    top 50%;
+    left 50%;
+    transform translate(-50%, -50%);
+    max-width 320px;
+    width 100%;
+    display flex;
+    align-items center;
+    justify-content center;
+    background var(--box-winner-bg);
+    box-shadow 0px 0px 5px var(--default-color);
+    overflow hidden;
+    z-index -1;
+    opacity 0;
+    transition opacity 0.3s;
+}
+
+.game__win--text {
+    font-size 22px;
+    padding 28px 0;
+    font-weight bold;
+    white-space nowrap;
+    text-align center;
+    text-transform uppercase;
+    text-shadow 1px 1px 1px var(--default-color);
+}
+
+.open {
+    opacity 1;
+}
+
+.close {
+    opacity 0;
+}
+
+.disabled {
+    background var(--disabled-bg);
+    cursor default;
+}
+
+.animate-opacity {
+    animation animate-opacity 0.5s;
+    animation-iteration-count 5;
+}
+
+/* prelader */
+.preloader {
+    width 100%;
+    height 100%;
+    position fixed;
+    left 0;
+    top 0;
+    bottom 0;
+    right 0;
+    z-index 9999;
+    opacity 1;
+    background linear-gradient(#232f44, #000);
+    transition opacity 0.5s;
+}
+
+.loader {
+    width 120px;
+    height 120px;
+    position absolute;
+    left 50%;
+    top 50%;
+    transform translate(-50%, -80%);
+    margin 0;
+}
+
+.loader div {
+    position absolute;
+    width 100%;
+    height 100%;
+}
+
+.loader div:after {
+    content "";
+    position absolute;
+    left 0;
+    top 0;
+    width 100%;
+    height 100%;
+    border-top 25px solid var(--preloader-color);
+    border-right 5px solid var(--preloader-color);
+    border-bottom 10px solid transparent;
+    border-left 0px solid transparent;
+    border-radius 50%;
+}
+
+.loader div:nth-child(1):after {
+    animation ring 1s linear infinite;
+    transform rotateX(70deg) rotateY(0deg) rotate(0deg);
+}
+
+.loader div:nth-child(2):after {
+    animation ring2 1s linear infinite;
+    animation-delay (1s/-2);
+    transform rotateX(70deg) rotateY(60deg) rotate(0deg);
+}
+
+.loader div:nth-child(3):after {
+    animation ring3 1s linear infinite;
+    animation-delay (1s/-3);
+    transform rotateX(70deg) rotateY(-60deg) rotate(0deg);
+}
+
+@keyframes ring {
+    100% {
+        transform rotateX(70deg) rotateY(0deg) rotate(360deg);
+    }
+}
+
+@keyframes ring2 {
+    100% {
+        transform rotateX(70deg) rotateY(60deg) rotate(360deg);
+    }
+}
+
+@keyframes ring3 {
+    100% {
+        transform rotateX(70deg) rotateY(-60deg) rotate(360deg);
+    }
+}
+
+/* Confetti */
+.winning {
+    position fixed;
+    left 0;
+    top 0;
+    bottom 0;
+    right 0;
+    max-width 520px;
+    width 100%;
+    height 100vh;
+    display block;
+    margin 0 auto;
+    overflow hidden;
+    transition opacity 0.5s;
+}
+
+.confetti {
+    display flex;
+    width 100%;
+    height 100%;
+    user-select none;
+}
+
+.confetti .square {
+    width 0.6rem;
+    height 0.6rem;
+    background-color var(--bg);
+    transform rotate(-140deg);
+    position relative;
+}
+
+.confetti .square:before {
+    content "";
+    width 0.5rem;
+    height 0.5rem;
+    background-color var(--bg);
+    position absolute;
+    top 5rem;
+    left -5rem;
+}
+
+.confetti .square:before {
+    content "";
+    width 0.7rem;
+    height 0.7rem;
+    background-color var(--bg);
+    position absolute;
+    top -4rem;
+    left 4rem;
+}
+
+.confetti .rectangle {
+    width 1rem;
+    height 0.8rem;
+    background-color var(--bg);
+    position relative;
+}
+
+.confetti .rectangle:before {
+    content "";
+    width 0.8rem;
+    height 1rem;
+    position absolute;
+    background-color var(--bg);
+    top -4rem;
+    left 4rem;
+}
+
+.confetti .rectangle:after {
+    content "";
+    width 0.8rem;
+    height 1rem;
+    position absolute;
+    background-color var(--bg);
+    top 3rem;
+    left -3rem;
+}
+
+.confetti .hexagram {
+    width 0;
+    height 0;
+    border-left 0.5rem solid transparent;
+    border-right 0.5rem solid transparent;
+    border-bottom 1rem solid var(--bg);
+    position relative;
+}
+
+.confetti .hexagram:after {
+    content "";
+    width 0;
+    height 0;
+    border-left 0.5rem solid transparent;
+    border-right 0.5rem solid transparent;
+    border-top 1rem solid var(--bg);
+    position absolute;
+    top 0.33rem;
+    left -0.5rem;
+}
+
+.confetti .pentagram {
+    width 0rem;
+    height 0rem;
+    display block;
+    margin 0.5rem 0;
+    border-right 1rem solid transparent;
+    border-bottom 0.7rem solid var(--bg);
+    border-left 1rem solid transparent;
+    transform rotate(35deg);
+    position relative;
+}
+
+.confetti .pentagram:before {
+    content "";
+    width 0;
+    height 0;
+    display block;
+    border-bottom 0.8rem solid var(--bg);
+    border-left 0.3rem solid transparent;
+    border-right 0.3rem solid transparent;
+    transform rotate(-35deg);
+    position absolute;
+    top -0.45rem;
+    left -0.65rem;
+}
+
+.confetti .pentagram:after {
+    content "";
+    width 0rem;
+    height 0rem;
+    display block;
+    border-right 1rem solid transparent;
+    border-bottom 0.7rem solid var(--bg);
+    border-left 1rem solid transparent;
+    transform rotate(-70deg);
+    position absolute;
+    top 0.03rem;
+    left -1.05rem;
+}
+
+.confetti .dodecagram {
+    background var(--bg);
+    width 0.8rem;
+    height 0.8rem;
+    position relative;
+}
+
+.confetti .dodecagram:before {
+    content "";
+    height 0.8rem;
+    width 0.8rem;
+    background var(--bg);
+    transform rotate(30deg);
+    position absolute;
+    top 0;
+    left 0;
+}
+
+.confetti .dodecagram:after {
+    conten "";
+    height 0.8rem;
+    width 0.8rem;
+    background var(--bg);
+    transform rotate(60deg);
+    position absolute;
+    top 0;
+    left 0;
+}
+
+.confetti i {
+    margin 0 0.125rem;
+    animation-name animate-rotate;
+    animation-timing-function linear;
+    animation-iteration-count infinite;
+    animation-duration calc(80s / var(--speed));
+}
+
+@keyframes animate-rotate {
+    0% {
+    transform translateY(-100vh) rotateX(360deg) rotateY(-360deg) rotate(360deg);
+    }
+    100% {
+    transform translateY(100vh);
+    }
+}
+
+@keyframes animate-opacity
+{
+    0%, 100% {
+        opacity 1;
+    }
+    50% {
+        opacity 0.2;
+    }
+}
